@@ -24,3 +24,41 @@ export const getGenres = () => (dispatch) => {
       })
     );
 };
+
+//favorilerdeki filmleri al:
+export const getFavorites = () => (dispatch) => {
+  dispatch({ type: ActionTypes.FAV_LOADING });
+  api
+    .get("/account/21544039/favorite/movies")
+    .then((res) =>
+      dispatch({
+        type: ActionTypes.FAV_SUCCESS,
+        payload: res.data.results,
+      })
+    )
+    .catch((err) => {
+      dispatch({
+        type: ActionTypes.FAV_ERROR,
+        payload: err.message,
+      });
+    });
+};
+
+//favorilere ekle-çıkar:
+export const toggleFavorite = (movie, isAdd) => (dispatch) => {
+  api
+    .post("/account/21544039/favorite", {
+      media_type: "movie",
+      media_id: movie.id,
+      favorite: isAdd,
+    })
+    .then((res) =>
+      isAdd
+        ? dispatch({
+            type: ActionTypes.ADD_TO_FAV,
+            payload: movie,
+          })
+        : dispatch({ type: ActionTypes.REMOVE_FAV, payload: movie })
+    )
+    .catch((err) => console.log(err));
+};

@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Favourites from "./pages/Favourites";
+import Favourites from "./pages/Favorites";
 import Header from "./components/Header";
 import Detail from "./pages/Detail";
 import { useDispatch } from "react-redux";
-import { getGenres } from "./redux/actions/index";
+import { getFavorites, getGenres } from "./redux/actions/index";
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getGenres());
+    dispatch(getFavorites());
   }, []);
   return (
     <BrowserRouter>
@@ -19,7 +20,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/movie/:id" element={<Detail />} />
 
-          <Route path="/favourites" element={<Favourites />} />
+          <Route path="/watchlist" element={<Favourites />} />
         </Routes>
       </div>
     </BrowserRouter>

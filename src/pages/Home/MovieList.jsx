@@ -17,7 +17,7 @@ const MovieList = ({ genre }) => {
       .then((res) => setMovies(res.data.results))
       .catch((err) => console.log(err));
   }, []);
-  console.log(movies);
+
   return (
     <div className="my-10">
       <h1 className="text-2xl font-semibold mb-3 ">{genre.name} </h1>
